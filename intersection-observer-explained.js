@@ -13,14 +13,14 @@ const config = {
 // instantiate the observer
 observer = new IntersectionObserver(
   function(entries, observer) {
-    for (i = 0; i < entries.length; i++) {
-      if (entries[i].intersectionRatio > 0.29) {
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio > 0.29) {
         // do something to the element to watch
-        entries[i].target.console.log();
+        entry.target.console.log();
         // stop watching element - remove if the above should be a recurring action
-        observer.unobserve(entries[i].target);
+        observer.unobserve(entry.target);
       }
-    }
+    });
   // pass in the options
   }, config
 );
@@ -29,10 +29,10 @@ observer = new IntersectionObserver(
 const elementsToWatch = ['#one.element', '#two.element', '#three.element'];
 
 // loop through the array to hide and observe elements
-for (i = 0; i < elementsToWatch.length; i++) {
+elementsToWatch.forEach((element) => {
   // get element from DOM according to the querySelector from the array
-  const elementToWatch = document.querySelector(elementsToWatch[i]);
+  const observee = document.querySelector(element);
   // do any preliminary actions defined here, then...
   // observe the elements to watch
-  observer.observe(elementToWatch);
-}
+  observer.observe(observee);
+});
